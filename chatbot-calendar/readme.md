@@ -1,8 +1,8 @@
 # 🤖 Enterprise-Grade AI Autonomous Calendar Assistant
 
-[![Website](https://img.shields.io/badge/Visit-gijshulsebos.com-blue?style=for-the-badge&logo=googlechrome&logoColor=white)](https://gijshulsebos.com)
-
 ![Workflow Canvas](./Image%2019-03-2026%20at%2016.54%20(1).jpeg)
+
+[![Website](https://img.shields.io/badge/Visit-gijshulsebos.com-blue?style=for-the-badge&logo=googlechrome&logoColor=white)](https://gijshulsebos.com)
 
 ---
 
