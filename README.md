@@ -17,5 +17,7 @@
 ---
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/gijs-hulsebos/gijs-hulsebos/main/readme.md.banner.png" alt="Gijs Hulsebos AI Automation Footer" width="100%" />
+  <a href="JOUW_LINK_HIER" target="_blank">
+    <img src="https://raw.githubusercontent.com/gijs-hulsebos/gijs-hulsebos/main/readme.md.banner.png" alt="Gijs Hulsebos AI Automation Footer" width="100%" />
+  </a>
 </p>
