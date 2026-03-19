@@ -47,3 +47,11 @@ The workflow is exposed via a RESTful Webhook Node for easy integration with any
     "sessionId": "unique-user-id-123"
   }
 }
+
+----
+
+<p align="center">
+  <a href="https://gijshulsebos.com" target="_blank">
+    <img src="https://raw.githubusercontent.com/gijs-hulsebos/gijs-hulsebos/main/readme.md.banner.png" alt="Gijs Hulsebos AI Automation Footer" width="100%" />
+  </a>
+</p>
