@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/gijs-hulsebos/gijs-hulsebos/main/GijsHulsebos.banner.png" alt="Gijs Hulsebos AI Automation" width="100%" />
+  <img src="https://raw.githubusercontent.com/gijs-hulsebos/n8n-automation/main/n8n-automations%20banner%20(1).png" alt="n8n AI Automation Gijs Hulsebos" width="100%" />
 </p>
 
 <p align="center">
