@@ -47,4 +47,10 @@ This workflow follows the **Principle of Least Privilege**. API scopes are stric
 I specialize in building scalable AI automation systems that bridge the gap between complex LLM reasoning and practical business applications.
 
 🌐 **Portfolio:** [gijshulsebos.com](https://gijshulsebos.com)  
-✉️ **Contact:** Available via website for collaboration or inquiries.
+✉️ **Contact:** [gijs@gijshulsebos.com]
+
+---
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/gijs-hulsebos/gijs-hulsebos/main/readme.md.banner.png" alt="Gijs Hulsebos AI Automation Footer" width="100%" />
+</p>
