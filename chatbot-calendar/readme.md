@@ -1,4 +1,5 @@
 n8n Workflow: AI Autonomous Calendar Assistant
+![Workflow Canvas](./Image%2019-03-2026%20at%2016.54%20(1).jpeg)
 This n8n workflow deploys a sophisticated AI Agent designed to act as a personal assistant for scheduling and communication. It leverages large language models (LLMs) via OpenRouter to handle natural language requests for booking, updating, and managing Google Calendar events, while maintaining strict business logic and privacy protocols.
 
 🚀 Key Features
