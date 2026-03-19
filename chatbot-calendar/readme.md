@@ -1,61 +1,50 @@
-n8n Workflow: AI Autonomous Calendar Assistant
+# 🤖 Enterprise-Grade AI Autonomous Calendar Assistant
+
+[![Website](https://img.shields.io/badge/Visit-gijshulsebos.com-blue?style=for-the-badge&logo=googlechrome&logoColor=white)](https://gijshulsebos.com)
+
 ![Workflow Canvas](./Image%2019-03-2026%20at%2016.54%20(1).jpeg)
-This n8n workflow deploys a sophisticated AI Agent designed to act as a personal assistant for scheduling and communication. It leverages large language models (LLMs) via OpenRouter to handle natural language requests for booking, updating, and managing Google Calendar events, while maintaining strict business logic and privacy protocols.
 
-🚀 Key Features
-Multilingual Support: Automatically detects and mirrors the user's language (Dutch/English).
+---
 
-Intelligent Scheduling: Automatically enforces business hours (Mon-Fri, 09:00 - 17:00) and 60-minute meeting durations.
+## 📝 Executive Summary
+This **n8n-native autonomous agent** is engineered by [Gijs Hulsebos](https://gijshulsebos.com) as a high-reliability personal assistant. Moving beyond simple linear automation, this project utilizes an **Agentic Framework** with tool-calling capabilities to manage complex scheduling logic, ensuring robust data integrity and professional continuity.
 
-Privacy-First Logic: Mandatory email verification before accessing or modifying any existing calendar data.
+---
 
-Full CRUD Calendar Operations: Ability to create, read (check availability), and update events autonomously.
+## 🔥 Technical Highlights (Recruiter & Engineering Focus)
 
-Context-Aware Memory: Remembers the last 15 interactions to maintain conversation flow and professional continuity.
+* **🛡️ Advanced Fallback & Error Handling**: Implementation of a multi-layer fallback system. If the AI Agent fails to interpret a request or a tool returns an error, the system triggers a graceful degradation path to prevent workflow crashes.
+* **🧠 State-Aware Memory Management**: Utilizes a rolling window memory (last 15 interactions). This ensures the agent maintains context during long scheduling dialogues without exceeding LLM token limits or losing "thread" coherence.
+* **🔒 Identity-First Security Layer**: Built-in mandatory email verification. The agent is restricted from accessing or modifying sensitive calendar data until the requester's identity is logically validated.
+* **⚡ Optimized Tool-Calling**: Configured via **OpenRouter** to use cost-effective yet high-precision models (Gemini 1.5 Flash). The agent executes precise JSON-schema tool calls for **Google Calendar (CRUD)** and **Gmail** integrations.
+* **🌍 Deterministic Business Logic**: Hardcoded constraints for business hours (Mon-Fri, 09:00 - 17:00) and fixed meeting durations, preventing the AI from "hallucinating" or creating impossible bookings.
+* **🛰️ Webhook-Driven Architecture**: Designed for sub-second response times, allowing the assistant to be integrated into any frontend via a RESTful API trigger.
 
-Automated Communication: Integrated Gmail tool to send confirmations or follow-ups directly from the agent.
+---
 
-🛠 Workflow Logic ("The How it Works")
-The workflow follows a circular, tool-based architecture centered around an AI Agent:
+## 🛠️ Architecture & Stack
 
-Trigger (Webhook): The process begins when a POST request is sent to the /Gijs-Chat endpoint. It expects a JSON body containing the user's message and a sessionId.
+* **Orchestration**: n8n (Cloud-hosted)
+* **AI Engine**: OpenRouter (Gemini 1.5 Flash / GPT-4o Mini)
+* **Logic**: Node-based Agentic Reasoning + Custom JavaScript Data Transformation
+* **Integrations**: Google Calendar API (OAuth2), Gmail API, Webhooks
 
-The Brain (AI Agent): The core node is the AI Agent, powered by Gemini 2.5 Flash (via OpenRouter). It processes the system instructions which define Gijs Hulsebos's identity and strict scheduling rules.
+---
 
-Memory (Window Buffer): The agent is connected to a Simple Memory node, ensuring it doesn't "forget" the user's email or the topic of discussion mid-conversation.
+## ⚙️ Deployment & Governance
 
-Tool Execution: Based on the user's intent, the agent dynamically selects and triggers one of the following tools:
+> [!TIP]
+> **Engineering Excellence:** For the full technical breakdown, credential mapping, and error-handling documentation, see the **[Technical Setup Guide](./set-up.md)**.
 
-Google Calendar: Get many events (Availability check), Create an event (New booking), or Update an event (Rescheduling).
+---
 
-Gmail: Send a message for outbound email communication.
+## ⚠️ Compliance & Security
+This workflow follows the **Principle of Least Privilege**. API scopes are strictly limited to necessary calendar and mail actions. All sensitive data is handled via n8n's encrypted credential manager; no secrets or tokens are stored within this repository's JSON.
 
-Response (Respond to Webhook): Once the agent has either performed an action or needs more information, it sends a concise, formatted response back to the initial requester.
+---
 
-📋 Prerequisites
-To run this workflow, you will need the following:
+## 👨‍💻 Developed by Gijs Hulsebos
+I specialize in building scalable AI automation systems that bridge the gap between complex LLM reasoning and practical business applications.
 
-n8n Instance: Version 1.0+ recommended.
-
-OpenRouter API Key: To access the google/gemini-2.5-flash model.
-
-Google Cloud Console Project: With Google Calendar API and Gmail API enabled.
-
-OAuth2 Credentials: Configured within n8n for both Google Calendar and Gmail.
-
-⚙️ Setup & Installation
-Import: Copy the JSON content and paste it into a new n8n workflow canvas.
-
-Credentials:
-
-Open the OpenRouter Chat Model nodes and select/create your OpenRouter API credentials.
-
-Open the Google Calendar and Gmail nodes and complete the OAuth2 authentication flow for the account gijs@gijshulsebos.com (or your preferred email).
-
-Configuration:
-
-The workflow is currently set to the Europe/Amsterdam timezone. If you are in a different region, update the System Message in the AI Agent node and the workflow settings.
-
-The Business Hours are hardcoded in the Agent's instructions; modify these if your availability differs.
-
-Activation: Save the workflow and flip the toggle to Active.
+🌐 **Portfolio:** [gijshulsebos.com](https://gijshulsebos.com)  
+✉️ **Contact:** Available via website for collaboration or inquiries.
