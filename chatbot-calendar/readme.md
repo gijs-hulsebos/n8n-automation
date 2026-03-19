@@ -11,7 +11,7 @@ This **n8n-native autonomous agent** is engineered by [Gijs Hulsebos](https://gi
 
 ---
 
-## 🔥 Technical Highlights (Recruiter & Engineering Focus)
+## 🔥 Technical Highlights 
 
 * **🛡️ Advanced Fallback & Error Handling**: Implementation of a multi-layer fallback system. If the AI Agent fails to interpret a request or a tool returns an error, the system triggers a graceful degradation path to prevent workflow crashes.
 * **🧠 State-Aware Memory Management**: Utilizes a rolling window memory (last 15 interactions). This ensures the agent maintains context during long scheduling dialogues without exceeding LLM token limits or losing "thread" coherence.
