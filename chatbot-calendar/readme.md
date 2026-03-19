@@ -43,11 +43,11 @@ This workflow follows the **Principle of Least Privilege**. API scopes are stric
 
 ---
 
-## 👨‍💻 Developed by Gijs Hulsebos
-I specialize in building scalable AI automation systems that bridge the gap between complex LLM reasoning and practical business applications.
+## 🌐 Let's Connect
+Currently open for new opportunities and high-impact collaborations.
 
-🌐 **Portfolio:** [gijshulsebos.com](https://gijshulsebos.com)  
-✉️ **Contact:** [gijs@gijshulsebos.com]
+Website: gijshulsebos.com
+Email: gijs@gijshulsebos.com
 
 ---
 
