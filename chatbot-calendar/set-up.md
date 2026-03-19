@@ -48,7 +48,7 @@ The workflow is exposed via a RESTful Webhook Node for easy integration with any
   }
 }
 
-----
+```
 
 <p align="center">
   <a href="https://gijshulsebos.com" target="_blank">
