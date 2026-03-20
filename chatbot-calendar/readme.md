@@ -10,13 +10,15 @@
 This **n8n-native autonomous agent** is engineered by [Gijs Hulsebos](https://gijshulsebos.com) as a high-reliability personal assistant. Moving beyond linear automation, this project utilizes an **Agentic Framework** with dynamic tool-calling to manage complex scheduling, knowledge retrieval, and professional communication through a single API gateway.
 
 ---
-### 🎥 Quick Demo Walkthrough
+
+### 🎥 Technical Demo Walkthrough
+*A 45-second deep-dive into the agent's decision-making logic, tool-calling capabilities, and seamless integration across the Google Workspace ecosystem.*
 <p align="center">
   <a href="https://www.youtube.com/watch?v=4Zaoo0YbYaw&t=627s">
-    <img src="./assets/video-preview.png" alt="Watch the Demo" width="700">
+    <img src="https://raw.githubusercontent.com/gijs-hulsebos/n8n-automation/main/chatbot-calendar/Image%2020-03-2026%20at%2016.02.jpeg" alt="n8n Workflow Architecture" width="750">
+    <br><br>
+    <img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Watch on YouTube">
   </a>
-  <br>
-  <b>🚀 Click the image above to watch the 2-minute technical walkthrough on YouTube</b>
 </p>
 
 ---
