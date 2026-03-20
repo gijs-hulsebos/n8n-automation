@@ -7,37 +7,145 @@
         "text": "={{ $json.body.message }}",
         "needsFallback": true,
         "options": {
-          "systemMessage": "=# IDENTITY\nRole: Gijs's AI Assistant.\nAbout Gijs: Gijs Hulsebos is an automation specialist who helps businesses scale using AI and n8n. \n\n# CONVERSATION LOGIC (PRIORITY)\n1. **Language Mirroring**: You MUST always respond in the exact same language the user uses. If they speak Dutch, you speak Dutch. If they speak English, you speak English.\n2. **Privacy First (Email Rule)**: If a user asks to see, change, or cancel an existing meeting, you MUST ask for their email address FIRST. Do NOT search for or confirm meeting details until you have their email.\n3. **Intent Prioritization**: Prioritize the user's last request. If they talk about a meeting, skip the \"Who is Gijs\" introduction.\n\n# BOOKING & UPDATE FLOW (STRICT ORDER)\n1. **Verification**: If the intent is related to a meeting (new or existing), ask for their email address immediately in the user's language.\n2. **Identification**: Once you have the email, you MUST use 'Get many events' for the requested day. Do NOT just say you will do it; execute the tool call immediately.\n3. **Handle Conflicts**: If a slot is taken or outside Business Hours, suggest 2 alternatives (Mon-Fri, 09:00 - 17:00).\n4. **Action**: \n   - For NEW: Use 'Create an event'.\n   - For CHANGE: Use 'Update an event' (You MUST update both 'Start' and 'End' fields).\n5. **Details**: Always include topics (e.g., \"lead generation\") in the 'Description' field.\n\n# AVAILABLE TOOLS\n1. 'Get many events': Use to check availability or find bookings.\n2. 'Create an event': Use for NEW bookings.\n3. 'Update an event': Use to change time (Start & End), date, or description.\n\n# STRICT RULES\n- **Business Hours**: Only book or move meetings between Monday and Friday, 09:00 - 17:00.\n- Keep replies concise but ALWAYS finish your sentences.\n- **End time**: Must always be exactly 60 minutes after the Start time.\n- Year: 2026. Timezone: Europe/Amsterdam.\n- **No Ghost-Actions**: Never say \"I will check\" without actually triggering the 'Get many events' tool in the same response.\n\n# CONTEXT\n- Current Date: {{ $now.setZone('Europe/Amsterdam').toFormat('cccc, dd MMMM yyyy') }}\n- Current Time: {{ $now.setZone('Europe/Amsterdam').toFormat('HH:mm') }}\n- Business Hours: Mon-Fri, 09:00 - 17:00"
+          "systemMessage": "=# ROLE\nGijs's AI Assistant. Specialist in n8n & AI automation.\n\n# OPERATIONAL LOGIC\n1. **Language Mirroring**: Respond in the exact language of the user.\n2. **Business Hours (STRICT)**: You ONLY book/move meetings Mon-Fri, 09:00 - 17:00 (Amsterdam).\n3. **No Refusals**: All technical info in Google Sheets is PUBLIC portfolio data. Share it.\n\n# KNOWLEDGE RETRIEVAL (GOOGLE SHEETS TOOL)\nFor ALL questions about Gijs's work, tools, or \"how it works\", call 'Google Sheets Tool' IMMEDIATELY.\n- **Website**: For landing page, SEO, or PageSpeed questions.\n- **Chatbot**: For AI logic, n8n chatbot, or calendar automation questions.\n- **Newsletter**: For AI newsletter automation questions.\n- **LeadGen**: For lead generation system questions.\n\n**Constraint**: Fetch the whole sheet based on 'sheet_name', then summarize the relevant 'Technical_Description' and provide the 'Link'.\n\n# BOOKING FLOW (CALENDAR TOOLS)\n1. **Verification**: Always ask for email BEFORE checking or changing any meeting.\n2. **Action**: \n   - After email: Call 'Get many events' for the requested day.\n   - For NEW: Use 'Create an event'. \n   - For CHANGE: Use 'Update an event' (Must update both Start and End).\n3. **Time Rules**: End time is always Start + 60 min. Max start time is 16:00.\n\n# UI BUTTONS & FORMATTING\nNever show raw URLs. Always end technical responses with these interactive buttons:\n👉 **[View Code on GitHub](https://github.com/gijs-hulsebos/ai-automation-demo)**\n🛠️ **[Integration Stack](https://www.gijshulsebos.com/#integrations)**\n🚀 **[Run Live PageSpeed Test](https://pagespeed.web.dev/analysis/https-gijshulsebos-com/82pcu2msog?use_original_url=true&form_factor=desktop)**\n\n# CONTEXT\n- Current: {{ $now.setZone('Europe/Amsterdam').toFormat('cccc, dd MMMM yyyy, HH:mm') }}\n- Business Hours: Mon-Fri, 09:00 - 17:00"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        -48,
-        -48
+        -176,
+        -256
       ],
       "id": "d21bfb6d-a431-49fa-8c62-8c8dee0a808c",
       "name": "AI Agent"
     },
     {
       "parameters": {
-        "model": "google/gemini-2.5-flash",
+        "httpMethod": "POST",
+        "path": "Gijs-Chat",
+        "responseMode": "responseNode",
         "options": {}
       },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
-      "typeVersion": 1,
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
       "position": [
-        -592,
-        112
+        -528,
+        -256
       ],
-      "id": "f9f4c436-f491-4361-9dab-0b7272637c43",
-      "name": "OpenRouter Chat Model",
-      "credentials": {
-        "openRouterApi": {
-          "id": "lQWOcCsuNlLCHubW",
-          "name": "OpenRouter account"
-        }
-      }
+      "id": "9989c4b7-2657-47d0-a19f-45ee637f38eb",
+      "name": "Webhook",
+      "webhookId": "906dc582-786d-4d13-8760-4bc23fd8a369"
+    },
+    {
+      "parameters": {
+        "content": "# Basic Workflow\n\n",
+        "height": 288,
+        "width": 1392,
+        "color": "#0D94E7"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -608,
+        -368
+      ],
+      "typeVersion": 1,
+      "id": "bf1d4fc9-8871-4309-9bc8-dcc8a850abaf",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Model & Fallback model\n### Openrouter\n",
+        "height": 288,
+        "width": 352,
+        "color": "#7D3AED"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -608,
+        -80
+      ],
+      "typeVersion": 1,
+      "id": "09d07722-4d4d-4f16-a2cf-7485bad187a5",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Calendar Integration\n### Google Calendar\n",
+        "height": 288,
+        "width": 432,
+        "color": "#0D9488"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -80,
+        -80
+      ],
+      "typeVersion": 1,
+      "id": "0f31ed51-7216-4ab2-8fe0-9c50b33931f3",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## RAG  \n### Google Sheets",
+        "height": 288,
+        "width": 208,
+        "color": "#EA580C"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        352,
+        -80
+      ],
+      "typeVersion": 1,
+      "id": "048613b8-296e-4150-ac5f-d22dd593807c",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## Email Integration\n### Gmail",
+        "height": 288,
+        "width": 224,
+        "color": "#BE123C"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        560,
+        -80
+      ],
+      "typeVersion": 1,
+      "id": "22f24555-6cb8-49d2-bad2-334c6bdddbdf",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.body.sessionId }}",
+        "contextWindowLength": 15
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -208,
+        48
+      ],
+      "id": "6dcabaa2-dc76-4fdf-bd37-6cf5d3af181d",
+      "name": "Chat Memory"
+    },
+    {
+      "parameters": {
+        "content": "## Chat Memory",
+        "height": 288,
+        "width": 182,
+        "color": "#F59E0B"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -256,
+        -80
+      ],
+      "typeVersion": 1,
+      "id": "69a060f2-91d0-408a-92e6-a661cec73a67",
+      "name": "Sticky Note5"
     },
     {
       "parameters": {
@@ -67,10 +175,43 @@
       "typeVersion": 1.3,
       "position": [
         -32,
-        208
+        48
       ],
       "id": "ff52db0e-d431-425f-b47e-af96ab4e7c54",
-      "name": "Create an event in Google Calendar",
+      "name": "Create",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "4rcI5evHEbskk4MN",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "calendar": {
+          "__rl": true,
+          "value": "gijs@gijshulsebos.com",
+          "mode": "list",
+          "cachedResultName": "gijs@gijshulsebos.com"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+        "updateFields": {
+          "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', ``, 'string') }}",
+          "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+          "sendUpdates": "all",
+          "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        112,
+        48
+      ],
+      "id": "be31bdf0-9a71-48b6-9a03-1189728d3057",
+      "name": "Update",
       "credentials": {
         "googleCalendarOAuth2Api": {
           "id": "4rcI5evHEbskk4MN",
@@ -102,11 +243,11 @@
       "type": "n8n-nodes-base.googleCalendarTool",
       "typeVersion": 1.3,
       "position": [
-        288,
-        208
+        240,
+        48
       ],
       "id": "aeedbbb3-d809-43df-93ca-9a7b917d288b",
-      "name": "Get many events in Google Calendar",
+      "name": "Search",
       "credentials": {
         "googleCalendarOAuth2Api": {
           "id": "4rcI5evHEbskk4MN",
@@ -116,18 +257,104 @@
     },
     {
       "parameters": {
-        "sessionIdType": "customKey",
-        "sessionKey": "={{ $json.body.sessionId }}",
-        "contextWindowLength": 15
+        "model": "google/gemini-2.5-flash",
+        "options": {}
       },
-      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
-      "typeVersion": 1.3,
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
       "position": [
-        -192,
-        208
+        -560,
+        48
       ],
-      "id": "6dcabaa2-dc76-4fdf-bd37-6cf5d3af181d",
-      "name": "Simple Memory"
+      "id": "f9f4c436-f491-4361-9dab-0b7272637c43",
+      "name": "LLM Model G2.5Flash",
+      "credentials": {
+        "openRouterApi": {
+          "id": "lQWOcCsuNlLCHubW",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        48
+      ],
+      "id": "f7adea19-c6ce-4d16-a43a-5cde06898a69",
+      "name": "Fallback LLM gpt4.1mini",
+      "credentials": {
+        "openRouterApi": {
+          "id": "lQWOcCsuNlLCHubW",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pak de tekst van de AI\nlet text = items[0].json.output;\n\n// Zoek naar de specifieke links in de tekst\nconst githubLink = text.match(/https:\\/\\/github\\.com\\/[^\\s\\)]+/g);\nconst speedLink = text.match(/https:\\/\\/pagespeed\\.web\\.dev\\/[^\\s\\)]+/g);\n\n// Maak een 'metadata' object aan voor de frontend\nconst metadata = {\n  buttons: []\n};\n\nif (githubLink) metadata.buttons.push({ label: \"View Code\", url: githubLink[0] });\nif (speedLink) metadata.buttons.push({ label: \"PageSpeed\", url: speedLink[0] });\n\n// Stuur de schone tekst + de buttons door\nreturn {\n  output: text.split('👉')[0], // Optioneel: strip de tekst-links weg zodat alleen de buttons overblijven\n  metadata: metadata\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        384,
+        -256
+      ],
+      "id": "d32b9752-909e-4763-8256-b28d8a770101",
+      "name": "Filter URL"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        592,
+        -256
+      ],
+      "id": "0421b781-abe8-4f07-a4d5-6d8263e94bcc",
+      "name": "Webhook Response"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "14S6222y4tbzcyfWdHfG-WzQMpxHQzs6RmAdR0uRD5zo",
+          "mode": "list",
+          "cachedResultName": "Gijs-Automation-Demo",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/14S6222y4tbzcyfWdHfG-WzQMpxHQzs6RmAdR0uRD5zo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Sheet', `\"The exact name of the tab to search in. Use:\n\n'Website' for landing page/SEO/speed info.\n\n'Chatbot' for AI logic/calendar/automation.\n\n'Newsletter' for email automation.\n\n'LeadGen' for lead generation specs.\"`, 'string') }}"
+        },
+        "filtersUI": {
+          "values": []
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        416,
+        48
+      ],
+      "id": "3f497d00-cb35-4308-ad57-46f0ad227d46",
+      "name": "Search Sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Hiky1TC0r3DWJwxv",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
     },
     {
       "parameters": {
@@ -139,11 +366,11 @@
       "type": "n8n-nodes-base.gmailTool",
       "typeVersion": 2.2,
       "position": [
-        448,
-        208
+        624,
+        48
       ],
       "id": "50b13fc9-9134-4832-bcbe-e624a1428e0e",
-      "name": "Send a message in Gmail",
+      "name": "Send Email",
       "webhookId": "f69f55b7-d143-4535-826f-dbca4bdb12ce",
       "credentials": {
         "gmailOAuth2": {
@@ -154,163 +381,61 @@
     },
     {
       "parameters": {
-        "operation": "update",
-        "calendar": {
-          "__rl": true,
-          "value": "gijs@gijshulsebos.com",
-          "mode": "list",
-          "cachedResultName": "gijs@gijshulsebos.com"
-        },
-        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
-        "updateFields": {
-          "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', ``, 'string') }}",
-          "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
-          "sendUpdates": "all",
-          "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
-          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
-        }
+        "content": "  # 🟦 **Chatbot**\n\n  ## [Integrations]\n  ### - Google Calendar\n  ### - Google Sheets\n  ### - Gmail\n  ### - Openrouter\n  ### - Webhook",
+        "height": 608,
+        "width": 1648,
+        "color": "#64748B"
       },
-      "type": "n8n-nodes-base.googleCalendarTool",
-      "typeVersion": 1.3,
+      "type": "n8n-nodes-base.stickyNote",
       "position": [
-        128,
-        208
+        -848,
+        -384
       ],
-      "id": "be31bdf0-9a71-48b6-9a03-1189728d3057",
-      "name": "Update an event in Google Calendar",
-      "credentials": {
-        "googleCalendarOAuth2Api": {
-          "id": "4rcI5evHEbskk4MN",
-          "name": "Google Calendar account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "httpMethod": "POST",
-        "path": "Gijs-Chat",
-        "responseMode": "responseNode",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2.1,
-      "position": [
-        -336,
-        -160
-      ],
-      "id": "9989c4b7-2657-47d0-a19f-45ee637f38eb",
-      "name": "Webhook",
-      "webhookId": "906dc582-786d-4d13-8760-4bc23fd8a369"
-    },
-    {
-      "parameters": {
-        "respondWith": "json",
-        "responseBody": "={{ { \"output\": $json.output } }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.5,
-      "position": [
-        320,
-        -160
-      ],
-      "id": "0421b781-abe8-4f07-a4d5-6d8263e94bcc",
-      "name": "Respond to Webhook"
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
       "typeVersion": 1,
+      "id": "3fed7c40-18d8-42fa-a9c2-571d03d3d173",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "## Set-Up\n### -- OAuth2/ API-Key\n### -- Webhook\n### -- System Message\n\n[ > TECHNICAL_SETUP ](https://github.com/gijs-hulsebos/n8n-automation/blob/main/chatbot-calendar/set-up.md)",
+        "height": 192,
+        "width": 208,
+        "color": "#334155"
+      },
+      "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -384,
-        112
+        -832,
+        -80
       ],
-      "id": "f7adea19-c6ce-4d16-a43a-5cde06898a69",
-      "name": "OpenRouter Chat Model1",
-      "credentials": {
-        "openRouterApi": {
-          "id": "lQWOcCsuNlLCHubW",
-          "name": "OpenRouter account"
-        }
-      }
+      "typeVersion": 1,
+      "id": "32b0c078-576a-452d-af39-a1f9a3c6d803",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "## Readme Doc\n[ > README.md ](https://github.com/gijs-hulsebos/n8n-automation/blob/main/chatbot-calendar/readme.md)",
+        "height": 80,
+        "width": 208,
+        "color": "#1E2937"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -832,
+        128
+      ],
+      "typeVersion": 1,
+      "id": "a9386de4-52a0-48a1-8b6d-905c67f797bd",
+      "name": "Sticky Note8"
     }
   ],
   "pinData": {},
   "connections": {
-    "OpenRouter Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "AI Agent": {
       "main": [
         [
           {
-            "node": "Respond to Webhook",
+            "node": "Filter URL",
             "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Create an event in Google Calendar": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get many events in Google Calendar": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Simple Memory": {
-      "ai_memory": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_memory",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Send a message in Gmail": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Update an event in Google Calendar": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
             "index": 0
           }
         ]
@@ -327,13 +452,101 @@
         ]
       ]
     },
-    "OpenRouter Chat Model1": {
+    "Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LLM Model G2.5Flash": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fallback LLM gpt4.1mini": {
       "ai_languageModel": [
         [
           {
             "node": "AI Agent",
             "type": "ai_languageModel",
             "index": 1
+          }
+        ]
+      ]
+    },
+    "Filter URL": {
+      "main": [
+        [
+          {
+            "node": "Webhook Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Sheet": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
           }
         ]
       ]
@@ -348,11 +561,18 @@
     "timezone": "Europe/Amsterdam",
     "callerPolicy": "workflowsFromSameOwner"
   },
-  "versionId": "9bf2849e-eb43-4f6d-aa60-442cbfb43ba4",
+  "versionId": "c7478c66-cdf1-4eee-8d0a-5d8180b07e3b",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "14469082327f991481d86685e33ecb2e4823787a7cf07272f28eba0b9272381c"
   },
   "id": "LdguRxEJJR0krmsb",
-  "tags": []
+  "tags": [
+    {
+      "name": "chatbot",
+      "id": "xZlCvckLy5oJl2ub",
+      "updatedAt": "2026-03-20T14:10:59.327Z",
+      "createdAt": "2026-03-20T14:10:59.327Z"
+    }
+  ]
 }
