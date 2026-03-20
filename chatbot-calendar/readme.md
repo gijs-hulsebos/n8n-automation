@@ -7,18 +7,18 @@
 ---
 
 ## 📝 Executive Summary
-This **n8n-native autonomous agent** is engineered by [Gijs Hulsebos](https://gijshulsebos.com) as a high-reliability personal assistant. Beyond linear automation, this project utilizes an **Agentic Framework** with dynamic tool-calling to manage complex scheduling, knowledge retrieval, and professional communication through a single API gateway.
+This **n8n-native autonomous agent** is engineered by [Gijs Hulsebos](https://gijshulsebos.com) as a high-reliability personal assistant. Moving beyond linear automation, this project utilizes an **Agentic Framework** with dynamic tool-calling to manage complex scheduling, knowledge retrieval, and professional communication through a single API gateway.
 
 ---
 
 ## 🔥 Technical Highlights 
 
 * **🛡️ Dual-Model Fallback Architecture**: A robust multi-layer system using **Gemini 2.5 Flash** as the primary engine with an automated fallback to **GPT-4o Mini** via OpenRouter, ensuring high availability and reasoning continuity.
-* **🧠 Context-Aware Buffer Memory**: Implementation of a `memoryBufferWindow` that retains the last 15 interactions. dit stelt de agent in staat om complexe, meerstaps conversaties te voeren zonder de draad kwijt te raken.
-* **🔒 Logic-Based Identity Verification**: De agent is geprogrammeerd met een strikte 'Identity-First' regel: er worden geen agenda-gegevens getoond of gewijzigd voordat de gebruiker zijn e-mailadres heeft geverifieerd in de chat.
-* **📊 Dynamic RAG (Retrieval-Augmented Generation)**: Gebruikt een gespecialiseerde Google Sheets-tool om real-time technische data en portfolio-informatie op te halen. De agent summarizeert deze data direct voor de gebruiker.
-* **🖱️ Interactive Metadata Output**: Een aangepaste JavaScript-node filtert AI-outputs om interactieve buttons (GitHub, PageSpeed, etc.) als metadata door te geven aan de frontend, wat de gebruikerservaring aanzienlijk verbetert.
-* **🌍 Deterministic Business Logic**: De workflow hanteert strikte tijdzones (Europe/Amsterdam) en zakelijke parameters (Ma-Vr, 09:00 - 17:00), waardoor boekingen buiten kantooruren onmogelijk zijn.
+* **🧠 Context-Aware Buffer Memory**: Implementation of a `memoryBufferWindow` that retains the last 15 interactions, enabling the agent to conduct complex, multi-step conversations without losing coherence.
+* **🔒 Logic-Based Identity Verification**: The agent is programmed with a strict **Identity-First** rule: no calendar data is displayed or modified until the user has verified their email address within the chat session.
+* **📊 Dynamic RAG (Retrieval-Augmented Generation)**: Utilizes a specialized Google Sheets tool to retrieve real-time technical data and portfolio information. The agent summarizes this data directly for the user to provide up-to-date responses.
+* **🖱️ Interactive Metadata Output**: A custom JavaScript node filters AI outputs to pass interactive buttons (GitHub, PageSpeed, etc.) as metadata to the frontend, significantly enhancing the user experience.
+* **🌍 Deterministic Business Logic**: The workflow enforces strict time zones (Europe/Amsterdam) and business parameters (Mon-Fri, 09:00 - 17:00), making bookings outside business hours impossible.
 
 ---
 
@@ -28,27 +28,27 @@ This **n8n-native autonomous agent** is engineered by [Gijs Hulsebos](https://gi
 * **AI Models**: Google Gemini 2.5 Flash & OpenAI GPT-4o Mini
 * **Post-Processing**: Custom Node.js/JavaScript for URL filtering and metadata extraction
 * **Integrations**: 
-    * **Google Calendar API**: Voor volledige CRUD-operaties op events.
-    * **Google Sheets API**: Als vector-vrije database voor RAG.
-    * **Gmail API**: Voor geautomatiseerde bevestigingen en communicatie.
-    * **Webhook Gateway**: Voor naadloze integratie met web-frontends.
+    * **Google Calendar API**: For full CRUD operations on calendar events.
+    * **Google Sheets API**: Serving as a vector-free database for RAG operations.
+    * **Gmail API**: For automated appointment confirmations and professional communication.
+    * **Webhook Gateway**: For seamless integration with web frontends.
 
 ---
 
 ## ⚙️ Deployment & Governance
 
 > [!TIP]
-> **Engineering Excellence:** Voor de volledige technische breakdown, credential mapping en error-handling documentatie, zie de **[Technical Setup Guide](./set-up.md)**.
+> **Engineering Excellence:** For the full technical breakdown, credential mapping, and error-handling documentation, see the **[Technical Setup Guide](./set-up.md)**.
 
 ---
 
 ## ⚠️ Compliance & Security
-Dit systeem hanteert het **Principle of Least Privilege**. Alle API-scopes zijn strikt gelimiteerd tot de noodzakelijke acties. Gevoelige data wordt verwerkt via n8n's encrypted credential manager; er worden geen secrets of tokens opgeslagen in deze repository.
+This system adheres to the **Principle of Least Privilege**. All API scopes are strictly limited to necessary actions. Sensitive data is processed via n8n's encrypted credential manager; no secrets or tokens are stored within this repository.
 
 ---
 
 ## 🌐 Let's Connect
-Momenteel beschikbaar voor high-impact samenwerkingen op het gebied van AI-automatisering.
+Currently open for high-impact collaborations in the field of AI automation.
 
 Website: [gijshulsebos.com](https://gijshulsebos.com)
 Email: gijs@gijshulsebos.com
