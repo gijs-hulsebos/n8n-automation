@@ -34,6 +34,22 @@ This **n8n-native autonomous agent** is engineered by [Gijs Hulsebos](https://gi
 
 ---
 
+## 🛠️ Chatbot Technical Specifications
+These core features are integrated into the agent's logic to ensure a reliable and professional user experience.
+
+| Architecture | Technical Description | Tools Stack | Business Impact |
+| :--- | :--- | :--- | :--- |
+| **Agent Identity** | Custom-built AI Assistant for Gijs Hulsebos, specialized in automated scheduling and lead qualification. | n8n AI Agent, Gemini 2.5 Flash | 24/7 Professional Support |
+| **Availability Check** | Real-time availability lookup that identifies conflicts and respects business hours (Mon-Fri, 09:00-17:00). | n8n Google Calendar Tool | Zero Overbooking Errors |
+| **Meeting Creation** | Automated event creation including Google Meet links and specific descriptions for lead tracking. | Google Calendar API, Hangouts Meet | Instant Lead Conversion |
+| **Meeting Updates** | Logic to reschedule existing meetings by updating both Start and End times (fixed 60-min slots). | n8n Update Event Tool | Flexible Client Management |
+| **Security Protocol** | Mandatory email verification required before accessing, modifying, or confirming any meeting details. | n8n System Logic (Prompt-based) | Data Privacy & Protection |
+| **Email Integration** | Triggers automated Gmail responses for confirmations and rescheduling alerts to ensure no-show reduction. | Gmail Tool, OAuth2 | Enhanced User Experience |
+| **Memory Buffer** | Remembers up to 15 messages in the current conversation to maintain context without repeating questions. | n8n Window Buffer Memory | Seamless Conversational Flow |
+| **Model Redundancy** | High-availability architecture that automatically switches to a secondary LLM model if the primary API fails or hits rate limits. | OpenRouter, Dual Model Setup: Gemini 2.5 + GPT 4.1 mini | 99.9% AI Service Uptime |
+
+---
+
 ## 🛠️ Architecture & Stack
 
 * **Orchestration**: n8n (Cloud-hosted)
