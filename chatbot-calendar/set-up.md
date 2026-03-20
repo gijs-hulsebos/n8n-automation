@@ -66,3 +66,11 @@ The workflow is accessible via a secured Webhook endpoint.
     "sessionId": "user_12345"
   }
 }
+```
+---
+
+<p align="center">
+  <a href="https://gijshulsebos.com" target="_blank">
+    <img src="https://raw.githubusercontent.com/gijs-hulsebos/gijs-hulsebos/main/readme.md.banner.png" alt="Gijs Hulsebos AI Automation Footer" width="100%" />
+  </a>
+</p>
