@@ -52,3 +52,12 @@ Currently open for high-impact collaborations in the field of AI automation.
 
 Website: [gijshulsebos.com](https://gijshulsebos.com)
 Email: gijs@gijshulsebos.com
+
+---
+
+<p align="center">
+  <a href="https://gijshulsebos.com" target="_blank">
+    <img src="https://raw.githubusercontent.com/gijs-hulsebos/gijs-hulsebos/main/readme.md.banner.png" alt="Gijs Hulsebos AI Automation Footer" width="100%" />
+  </a>
+</p>
+
