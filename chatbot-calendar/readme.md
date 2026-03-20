@@ -10,6 +10,16 @@
 This **n8n-native autonomous agent** is engineered by [Gijs Hulsebos](https://gijshulsebos.com) as a high-reliability personal assistant. Moving beyond linear automation, this project utilizes an **Agentic Framework** with dynamic tool-calling to manage complex scheduling, knowledge retrieval, and professional communication through a single API gateway.
 
 ---
+### 🎥 Quick Demo Walkthrough
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=4Zaoo0YbYaw&t=627s">
+    <img src="./assets/video-preview.png" alt="Watch the Demo" width="700">
+  </a>
+  <br>
+  <b>🚀 Click the image above to watch the 2-minute technical walkthrough on YouTube</b>
+</p>
+
+---
 
 ## 🔥 Technical Highlights 
 
