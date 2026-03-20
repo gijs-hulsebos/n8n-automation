@@ -7,46 +7,48 @@
 ---
 
 ## 📝 Executive Summary
-This **n8n-native autonomous agent** is engineered by [Gijs Hulsebos](https://gijshulsebos.com) as a high-reliability personal assistant. Moving beyond simple linear automation, this project utilizes an **Agentic Framework** with tool-calling capabilities to manage complex scheduling logic, ensuring robust data integrity and professional continuity.
+This **n8n-native autonomous agent** is engineered by [Gijs Hulsebos](https://gijshulsebos.com) as a high-reliability personal assistant. Beyond linear automation, this project utilizes an **Agentic Framework** with dynamic tool-calling to manage complex scheduling, knowledge retrieval, and professional communication through a single API gateway.
 
 ---
 
 ## 🔥 Technical Highlights 
 
-* **🛡️ Advanced Fallback & Error Handling**: Implementation of a multi-layer fallback system. If the AI Agent fails to interpret a request or a tool returns an error, the system triggers a graceful degradation path to prevent workflow crashes.
-* **🧠 State-Aware Memory Management**: Utilizes a rolling window memory (last 15 interactions). This ensures the agent maintains context during long scheduling dialogues without exceeding LLM token limits or losing "thread" coherence.
-* **🔒 Identity-First Security Layer**: Built-in mandatory email verification. The agent is restricted from accessing or modifying sensitive calendar data until the requester's identity is logically validated.
-* **⚡ Optimized Tool-Calling**: Configured via **OpenRouter** to use cost-effective yet high-precision models (Gemini 2.5 Flash). The agent executes precise JSON-schema tool calls for **Google Calendar (CRUD)** and **Gmail** integrations.
-* **🌍 Deterministic Business Logic**: Hardcoded constraints for business hours (Mon-Fri, 09:00 - 17:00) and fixed meeting durations, preventing the AI from "hallucinating" or creating impossible bookings.
-* **🛰️ Webhook-Driven Architecture**: Designed for sub-second response times, allowing the assistant to be integrated into any frontend via a RESTful API trigger.
+* **🛡️ Dual-Model Fallback Architecture**: A robust multi-layer system using **Gemini 2.5 Flash** as the primary engine with an automated fallback to **GPT-4o Mini** via OpenRouter, ensuring high availability and reasoning continuity.
+* **🧠 Context-Aware Buffer Memory**: Implementation of a `memoryBufferWindow` that retains the last 15 interactions. dit stelt de agent in staat om complexe, meerstaps conversaties te voeren zonder de draad kwijt te raken.
+* **🔒 Logic-Based Identity Verification**: De agent is geprogrammeerd met een strikte 'Identity-First' regel: er worden geen agenda-gegevens getoond of gewijzigd voordat de gebruiker zijn e-mailadres heeft geverifieerd in de chat.
+* **📊 Dynamic RAG (Retrieval-Augmented Generation)**: Gebruikt een gespecialiseerde Google Sheets-tool om real-time technische data en portfolio-informatie op te halen. De agent summarizeert deze data direct voor de gebruiker.
+* **🖱️ Interactive Metadata Output**: Een aangepaste JavaScript-node filtert AI-outputs om interactieve buttons (GitHub, PageSpeed, etc.) als metadata door te geven aan de frontend, wat de gebruikerservaring aanzienlijk verbetert.
+* **🌍 Deterministic Business Logic**: De workflow hanteert strikte tijdzones (Europe/Amsterdam) en zakelijke parameters (Ma-Vr, 09:00 - 17:00), waardoor boekingen buiten kantooruren onmogelijk zijn.
 
 ---
 
 ## 🛠️ Architecture & Stack
 
 * **Orchestration**: n8n (Cloud-hosted)
-* **AI Engine**: OpenRouter (Gemini 2.5 Flash / GPT-4o Mini)
-* **Logic**: Node-based Agentic Reasoning + Custom JavaScript Data Transformation
-* **Integrations**: Google Calendar API (OAuth2), Gmail API, Webhooks
+* **AI Models**: Google Gemini 2.5 Flash & OpenAI GPT-4o Mini
+* **Post-Processing**: Custom Node.js/JavaScript for URL filtering and metadata extraction
+* **Integrations**: 
+    * **Google Calendar API**: Voor volledige CRUD-operaties op events.
+    * **Google Sheets API**: Als vector-vrije database voor RAG.
+    * **Gmail API**: Voor geautomatiseerde bevestigingen en communicatie.
+    * **Webhook Gateway**: Voor naadloze integratie met web-frontends.
 
 ---
 
 ## ⚙️ Deployment & Governance
 
 > [!TIP]
-> **Engineering Excellence:** For the full technical breakdown, credential mapping, and error-handling documentation, see the **[Technical Setup Guide](./set-up.md)**.
+> **Engineering Excellence:** Voor de volledige technische breakdown, credential mapping en error-handling documentatie, zie de **[Technical Setup Guide](./set-up.md)**.
 
 ---
 
 ## ⚠️ Compliance & Security
-This workflow follows the **Principle of Least Privilege**. API scopes are strictly limited to necessary calendar and mail actions. All sensitive data is handled via n8n's encrypted credential manager; no secrets or tokens are stored within this repository's JSON.
+Dit systeem hanteert het **Principle of Least Privilege**. Alle API-scopes zijn strikt gelimiteerd tot de noodzakelijke acties. Gevoelige data wordt verwerkt via n8n's encrypted credential manager; er worden geen secrets of tokens opgeslagen in deze repository.
 
 ---
 
 ## 🌐 Let's Connect
-Currently open for new opportunities and high-impact collaborations.
+Momenteel beschikbaar voor high-impact samenwerkingen op het gebied van AI-automatisering.
 
-Website: https://gijshulsebos.com
+Website: [gijshulsebos.com](https://gijshulsebos.com)
 Email: gijs@gijshulsebos.com
-
----
