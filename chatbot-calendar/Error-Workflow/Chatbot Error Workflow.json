@@ -1,0 +1,116 @@
+{
+  "name": "Chatbot Error Workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        0
+      ],
+      "id": "8d7f7024-0618-45bd-8a3d-60ec562fa563",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "content": "# Chatbot Error Workflow",
+        "height": 352,
+        "width": 416,
+        "color": "#121212"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -80,
+        -160
+      ],
+      "typeVersion": 1,
+      "id": "439cdd9f-3d20-43dd-be0f-8f4857a72213",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Notification\n",
+        "height": 256,
+        "width": 160,
+        "color": "#065F46"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        160,
+        -80
+      ],
+      "typeVersion": 1,
+      "id": "dd9ff3d2-c266-46a1-9359-74f91aac6a38",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Error Log\n",
+        "height": 256,
+        "width": 160,
+        "color": "#8B0000"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -64,
+        -80
+      ],
+      "typeVersion": 1,
+      "id": "2efc0b38-1342-41f4-aa72-d891622ce5bf",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "sendTo": "gijs@gijshulsebos.com",
+        "subject": "=Workflow \"{{ $json.workflow.name }}\" Broke down!",
+        "message": "=Hi Gijs  {{ $json.workflow.name }} broke down in node \"{{ $json.execution.lastNodeExecuted }}\". This was the error: \"{{ $json.execution.error.message }}\"",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        192,
+        0
+      ],
+      "id": "972429fa-199e-4884-8398-3e2a0a1a31c7",
+      "name": "Notify",
+      "webhookId": "4d701d1d-9718-4fff-8b1a-b6d95206bcad",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "h1YBkMxfZJjsi6On",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Notify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "a6ab8713-ee3e-40ad-8b16-fa994521e5fe",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "14469082327f991481d86685e33ecb2e4823787a7cf07272f28eba0b9272381c"
+  },
+  "id": "QKyXpzXj07PJY6Av",
+  "tags": []
+}
