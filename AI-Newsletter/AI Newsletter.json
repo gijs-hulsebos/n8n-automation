@@ -1,0 +1,846 @@
+{
+  "name": "AI Newsletter",
+  "nodes": [
+    {
+      "parameters": {
+        "numberInputs": 6
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        16,
+        400
+      ],
+      "id": "3d196b22-d299-48a2-b0ae-364e4068911c",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "fba7f1e0-9822-4e2b-a123-6b785ab27388",
+              "leftValue": "={{ $json.pubDate }}",
+              "rightValue": "={{ $now.minus({ days: 1 }).set({ hour: 8, minute: 0, second: 0 }).toISO() }}",
+              "operator": {
+                "type": "dateTime",
+                "operation": "after"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        240,
+        464
+      ],
+      "id": "2b4d0b4e-a9ba-48fc-aaa6-715ea5897aa8",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "compare": "selectedFields",
+        "fieldsToCompare": "title",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        464,
+        464
+      ],
+      "id": "acb13363-ec62-4bc4-b4af-bb0b487dc6d1",
+      "name": "Remove Duplicates"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1xlTxV4IoO4LD9yI_mJvAlJ_oFG-4cxomDIy3r_4LpeM",
+          "mode": "list",
+          "cachedResultName": "Newsletter Sources",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1xlTxV4IoO4LD9yI_mJvAlJ_oFG-4cxomDIy3r_4LpeM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1xlTxV4IoO4LD9yI_mJvAlJ_oFG-4cxomDIy3r_4LpeM/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Date": "={{ $json.pubDate }}",
+            "Title": "={{ $json.title }}",
+            "Source": "={{ $json.link }}",
+            "Creator": "={{ $json.creator }}",
+            "Category": "={{ $json.categories }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Creator",
+              "displayName": "Creator",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Category",
+              "displayName": "Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Source",
+              "displayName": "Source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        672,
+        208
+      ],
+      "id": "0b04c426-a852-4416-b8f6-97240cf3c05d",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Hiky1TC0r3DWJwxv",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "Text",
+        "include": "allFieldsExcept",
+        "fieldsToExclude": "creator, ['dc:creator'], guid, isoDate, id",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        688,
+        464
+      ],
+      "id": "c501e841-03f9-4ed0-a98d-fea385ae9e07",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Analyze the following articles and autonomously create the strategy report in Google Docs using your tool. \n\nOnce the document is created, return the data strictly in the requested JSON format.\n\nDATA:\n{{ $json.Text }}",
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "=You are a Senior AI Strategy Consultant and Workflow Architect. Your objective is to transform raw AI news into a high-stakes executive briefing.\n\n\n\n1. USE THE GOOGLE DOCS TOOL:\n\nCreate a professional document in folder: 1NJldDF5wWjwf0iCs0Zn0slCEl6L44SQB\n\n- Title: \"STRATEGIC AI BRIEFING - {{ $now.format('DD-MM-YYYY') }}\"\n\n- Formatting: Use Markdown headers (#, ##, ###) and bold text for emphasis.\n\n- Document Structure:\n\n  # 📝 STRATEGIC AI BRIEFING | {{ $now.format('LL') }}\n\n  *Prepared by Autonomous Intelligence Agent*\n\n  ---\n\n  ## 🎯 EXECUTIVE SUMMARY\n\n  Briefly state the overarching AI theme of the day in 2 sentences.\n\n  ---\n\n  ## 👔 CEO & STRATEGY\n\n  [Insert CEO Content here]\n\n  ---\n\n  ## 📈 MARKETING & GROWTH\n\n  [Insert Marketing Content here]\n\n  ---\n\n  ## 👥 HR & OPERATIONS\n\n  [Insert HR Content here]\n\n  ---\n\n  *End of Confidential Briefing*\n\n\n\n2. ANALYZE & EXTRACT DATA (JSON):\n\nCategorize the news into CEO, Marketing, and HR. Select the Top 3 most impactful stories per segment.\n\n\n\nSTRICT CONTENT RULES:\n\n- NO META-TALK: Do not use \"This article discusses\" or \"In this guide\".\n\n- INSIGHT-FIRST: Start every bullet point with a bolded strategic takeaway or a hard fact/number.\n\n- ACTIONABLE: Explain the \"So What?\" – why should an executive care about this specific news?\n\n- FORMAT: Use \"\\n• \" for bullet points within the JSON strings to ensure clean list rendering.\n\n\n\nYOUR OUTPUT MUST BE STRICTLY AND EXCLUSIVELY JSON AFTER THE TOOL CALL.\n\n\n\nFormat:\n\n{\n\n  \"document_id\": \"[ID OF THE CREATED GOOGLE DOC]\",\n\n  \"ceo_content\": \"### 1. [Title] - [Score]/10\\n**Core Insight:** [Insight here]\\n**Impact:** [Why it matters]\\n**Source:** [URL]\",\n\n  \"marketing_content\": \"### 1. [Title] - [Score]/10\\n**Core Insight:** [Insight here]\\n**Impact:** [Why it matters]\\n**Source:** [URL]\",\n\n  \"hr_content\": \"### 1. [Title] - [Score]/10\\n**Core Insight:** [Insight here]\\n**Impact:** [Why it matters]\\n**Source:** [URL]\"\n\n}",
+          "maxIterations": 10
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        880,
+        464
+      ],
+      "id": "9fe5d9d8-3735-4afc-80f9-635b2ffe7b7b",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ca3712a7-6631-4d7b-a90f-e78db9ec4496",
+              "name": "=ceo_text",
+              "value": "={{ $json.output.match(/\"ceo_content\":\\s*\"([\\s\\S]*?)\"/)[1].replace(/\\\\n/g, '\\n') }}",
+              "type": "string"
+            },
+            {
+              "id": "638874af-f591-4f15-a7a4-0fa0ffff8f56",
+              "name": "marketing_text",
+              "value": "={{ $json.output.match(/\"marketing_content\":\\s*\"([\\s\\S]*?)\"/)[1].replace(/\\\\n/g, '\\n') }}",
+              "type": "string"
+            },
+            {
+              "id": "61faa890-cf1f-40ec-9c29-1ddb9fa689d7",
+              "name": "hr_text",
+              "value": "={{ $json.output.match(/\"hr_content\":\\s*\"([\\s\\S]*?)\"/)[1].replace(/\\\\n/g, '\\n') }}",
+              "type": "string"
+            },
+            {
+              "id": "6b593e53-4ec3-43b3-a3fe-9d4864c811c0",
+              "name": "document_id",
+              "value": "={{ $json.output.match(/\"document_id\":\\s*\"([^\"]+)\"/)[1] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1248,
+        464
+      ],
+      "id": "19437545-1032-4ab8-950d-a7f73352c4a8",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "folderId": "=1fEScFwMHIOel8k5hqLn1i_F6ESaC-qyi",
+        "title": "=Daily AI Briefing - {{ $now.format('dd-MM-yyyy') }} "
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        720,
+        768
+      ],
+      "id": "ceb53337-102c-4a89-a107-4ab5f789411b",
+      "name": "Create a document in Google Docs",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "QhNMgQ0zsUfGgACX",
+          "name": "Google Docs OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        992
+      ],
+      "id": "56b7541d-ba49-4040-9008-d2af81343a3e",
+      "name": "Create a row in Supabase",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\nfor (let item of items) {\n  const requests = [];\n  let currentIndex = 1;\n\n  // Dynamische Unsplash image (met tijdstempel voor variatie)\n  const imageUrl = `https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=1000&sig=${new Date().getTime()}`;\n\n  // 1. VOEG AFBEELDING TOE\n  requests.push({\n    insertInlineImage: {\n      location: { index: 1 },\n      uri: imageUrl,\n      objectSize: {\n        width: { magnitude: 450, unit: 'PT' },\n        height: { magnitude: 250, unit: 'PT' }\n      }\n    }\n  });\n  currentIndex += 1; \n\n  // Helper voor tekst\n  const addText = (text, style = null) => {\n    if (!text) return;\n    const start = currentIndex;\n    requests.push({ insertText: { location: { index: currentIndex }, text: text } });\n    currentIndex += text.length;\n    \n    if (style === 'H1') {\n      requests.push({\n        updateParagraphStyle: {\n          range: { startIndex: start, endIndex: currentIndex },\n          paragraphStyle: { namedStyleType: 'HEADING_1' },\n          fields: 'namedStyleType'\n        }\n      });\n    }\n  };\n\n  // VERBETERDE LINK FUNCTIE\n  const addLink = (url) => {\n    if (!url || !url.startsWith('http')) return; // Check of het echt een URL is\n    const label = \"Read full article\";\n    const linkText = `\\n${label}\\n\\n`;\n    const start = currentIndex + 1; // +1 om de \\n over te slaan voor de styling\n    \n    requests.push({ insertText: { location: { index: currentIndex }, text: linkText } });\n    \n    requests.push({\n      updateTextStyle: {\n        range: { startIndex: start, endIndex: start + label.length },\n        textStyle: { \n          link: { url: url.trim() }, \n          // Kleur moet 3 componenten hebben (red, green, blue) tussen 0 en 1\n          foregroundColor: { color: { rgbColor: { red: 0.1, green: 0.3, blue: 0.8 } } }, \n          underline: true \n        },\n        fields: 'link,foregroundColor,underline'\n      }\n    });\n    currentIndex += linkText.length;\n  };\n\n  const cleanFormat = (text) => text ? text.replace(/[#*]/g, '').trim() : \"\";\n\n  // --- PAGINA 1: COVER ---\n  addText(\"\\n\\nSTRATEGIC AI INTELLIGENCE REPORT\\n\", 'H1');\n  addText(`\\nPrepared by: Gijs Hulsebos\\nDate: ${new Date().toLocaleDateString('nl-NL')}\\n`);\n  \n  requests.push({ insertPageBreak: { location: { index: currentIndex } } });\n  currentIndex += 1;\n\n  // --- PAGINA 2, 3, 4 ---\n  const sections = [\n    { title: \"👔 I. CEO & STRATEGY\", content: item.json.ceo_text },\n    { title: \"📈 II. MARKETING & GROWTH\", content: item.json.marketing_text },\n    { title: \"👥 III. HR & TALENT\", content: item.json.hr_text }\n  ];\n\n  sections.forEach((sec, idx) => {\n    addText(`${sec.title}\\n`, 'H1');\n    const articles = sec.content.split('###').filter(a => a.trim().length > 0);\n    \n    articles.forEach(art => {\n      // SLIMMERE LINK EXTRACTIE: Zoek alles wat met http begint\n      const urlRegex = /(https?:\\/\\/[^\\s\\)\\*]+)/g;\n      const foundLinks = art.match(urlRegex);\n      const cleanArtText = art.split(/Source:/gi)[0]; // Pak alleen de tekst voor \"Source:\"\n      \n      addText(`\\n${cleanFormat(cleanArtText)}\\n`);\n      \n      if (foundLinks && foundLinks.length > 0) {\n        // Pak de laatste link uit het artikel (vaak de bron)\n        addLink(foundLinks[foundLinks.length - 1]);\n      } else {\n        addText(\"\\n\");\n      }\n    });\n\n    if (idx < sections.length - 1) {\n      requests.push({ insertPageBreak: { location: { index: currentIndex } } });\n      currentIndex += 1;\n    }\n  });\n\n  addText(\"\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n\");\n  addText(\"© 2026 | Gijs Hulsebos Autonomous Intelligence\");\n\n  item.json.googleApiBody = { requests: requests };\n}\n\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1744,
+        272
+      ],
+      "id": "41d26ebc-a23f-4b16-974f-4aa7be3c5bcb",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://docs.googleapis.com/v1/documents/{{ $json.document_id }}:batchUpdate",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDocsOAuth2Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.googleApiBody }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1952,
+        272
+      ],
+      "id": "48b7542b-532c-4ae0-91a4-cc1f5092572a",
+      "name": "HTTP Request",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "QhNMgQ0zsUfGgACX",
+          "name": "Google Docs OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 7
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -608,
+        512
+      ],
+      "id": "2cf47486-c02d-447e-aea4-cb29d4dfac0d",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://www.artificialintelligence-news.com/feed/",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        -208,
+        96
+      ],
+      "id": "38f66d18-a96e-4aaa-bede-30f4a0415783",
+      "name": "AI-News"
+    },
+    {
+      "parameters": {
+        "url": "https://www.technologyreview.com/topic/artificial-intelligence/feed/",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        -208,
+        240
+      ],
+      "id": "1dd5c626-8e95-4083-85fb-f1d791aaf3eb",
+      "name": "TechnologyReview"
+    },
+    {
+      "parameters": {
+        "url": "https://www.forbes.com/innovation/feed/",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        -208,
+        384
+      ],
+      "id": "8ceb76f4-e85d-4d5c-b942-ad7eb458aac4",
+      "name": "Forbes"
+    },
+    {
+      "parameters": {
+        "url": "https://aibusiness.com/rss.xml",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        -208,
+        528
+      ],
+      "id": "4a1376e5-4a9e-4875-82b9-13dc7071af81",
+      "name": "AI-Business"
+    },
+    {
+      "parameters": {
+        "url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        -208,
+        672
+      ],
+      "id": "4be7bacc-d385-4933-9122-b37831d46d95",
+      "name": "TheVerge"
+    },
+    {
+      "parameters": {
+        "url": "https://openai.com/news/rss.xml",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        -208,
+        816
+      ],
+      "id": "4c9e8b7d-e697-4101-ac2d-858aeeea619e",
+      "name": "OpenAI"
+    },
+    {
+      "parameters": {
+        "model": "google/gemini-2.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        224,
+        768
+      ],
+      "id": "380bf2c2-917d-429e-9d8d-5b421c34dd45",
+      "name": "Gemini 2.5 Flash",
+      "credentials": {
+        "openRouterApi": {
+          "id": "lQWOcCsuNlLCHubW",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        432,
+        768
+      ],
+      "id": "9abdcdb2-ddc0-45a9-8a21-f620a01cc6a2",
+      "name": "gpt-4.1-mini",
+      "credentials": {
+        "openRouterApi": {
+          "id": "lQWOcCsuNlLCHubW",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.documentId }}",
+          "mode": "id"
+        },
+        "options": {
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "application/pdf"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2144,
+        272
+      ],
+      "id": "1e46deac-75a3-4a5e-801f-5835fd987a8d",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "cR1NTux7RQpCy206",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "gijs@gijshulsebos.com",
+        "subject": "=Daily AI Briefing - {{ $now.format('dd-MM-yyyy') }} ",
+        "message": "=Hello ",
+        "options": {
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {}
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2352,
+        272
+      ],
+      "id": "b1b56223-d2b6-444d-b5ac-f7fc13c39a4e",
+      "name": "Send a message",
+      "webhookId": "d4fde701-f742-4386-8aff-9440052cf37f",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "h1YBkMxfZJjsi6On",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ec51e27c-0326-4691-97d8-22990d5092b0",
+              "leftValue": "",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1488,
+        464
+      ],
+      "id": "2f30c8ad-5960-4625-9105-4239706b648b",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.mailerLite",
+      "typeVersion": 2,
+      "position": [
+        1744,
+        656
+      ],
+      "id": "089c10dc-b1b3-471f-b00f-c5882524f07b",
+      "name": "Get many subscribers"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Remove Duplicates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        []
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a document in Google Docs": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a row in Supabase": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI-News",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "TechnologyReview",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Forbes",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI-Business",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "TheVerge",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI-News": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TechnologyReview": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Forbes": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "AI-Business": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "TheVerge": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 5
+          }
+        ]
+      ]
+    },
+    "Gemini 2.5 Flash": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "gpt-4.1-mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Get many subscribers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "16730883-6c27-4615-9b01-8c988759cca5",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "14469082327f991481d86685e33ecb2e4823787a7cf07272f28eba0b9272381c"
+  },
+  "id": "LIx9TBReCRp0BzKI",
+  "tags": []
+}
