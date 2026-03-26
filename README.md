@@ -14,6 +14,22 @@
 
 ---
 *TEXT UPDATE*
+
+Chatbot
+- Complete workflow
+- Error logging
+- Usage logging
+
+AI Newsletter
+- Complete workflow
+- Error logging
+- Usage logging
+
+Leadgen
+- Complete workflow
+- Error logging
+- Usage logging 
+
 ---
 
 <p align="center">
