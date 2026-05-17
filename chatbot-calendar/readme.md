@@ -11,18 +11,6 @@ This **n8n-native autonomous agent** is engineered by [Gijs Hulsebos](https://gi
 
 ---
 
-### 🎥 Technical Demo Walkthrough
-*A 45-second deep-dive into the agent's decision-making logic, tool-calling capabilities, and seamless integration across the Google Workspace ecosystem.*
-<p align="center">
-  <a href="https://www.youtube.com/watch?v=4Zaoo0YbYaw&t=627s">
-    <img src="https://raw.githubusercontent.com/gijs-hulsebos/n8n-automation/main/chatbot-calendar/Image%2020-03-2026%20at%2016.02.jpeg" alt="n8n Workflow Architecture" width="750">
-    <br><br>
-    <img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Watch on YouTube">
-  </a>
-</p>
-
----
-
 ## 🔥 Technical Highlights 
 
 * **🛡️ Dual-Model Fallback Architecture**: A robust multi-layer system using **Gemini 2.5 Flash** as the primary engine with an automated fallback to **GPT-4o Mini** via OpenRouter, ensuring high availability and reasoning continuity.
