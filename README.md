@@ -25,10 +25,9 @@ AI Newsletter
 - Error logging
 - Usage logging
 
-Leadgen
+Insurance Demo
 - Complete workflow
 - Error logging
-- Usage logging 
 
 ---
 
